@@ -11,10 +11,10 @@ from behave.reporter.base import Reporter
 from behave.formatter.base import StreamOpener
 
 
-if sys.version_info.major < 3 or sys.version_info.minor < 3:
-    from time import clock
-else:
+try:
     from time import perf_counter as clock
+except ImportError:
+    from time import clock
 
 
 # -- DISABLED: optional_steps = ('untested', 'undefined')
