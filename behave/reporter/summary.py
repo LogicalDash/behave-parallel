@@ -60,7 +60,6 @@ class SummaryReporter(Reporter):
                              Status.skipped.name: 0, Status.untested.name: 0,
                              Status.undefined.name: 0}
         self.start = clock()
-        self.failed_scenarios = []
 
     def feature(self, feature):
         self.feature_summary[feature.status.name] += 1
