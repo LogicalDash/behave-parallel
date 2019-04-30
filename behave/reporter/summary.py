@@ -4,12 +4,17 @@ Provides a summary after each test run.
 """
 
 from __future__ import absolute_import, division
+import six
 import sys
-from time import monotonic
 from behave.model import ScenarioOutline
 from behave.model_core import Status
 from behave.reporter.base import Reporter
 from behave.formatter.base import StreamOpener
+
+if six.PY2:
+    from time import clock
+else:
+    from time import monotonic as clock
 
 
 # -- DISABLED: optional_steps = ('untested', 'undefined')
@@ -54,7 +59,7 @@ class SummaryReporter(Reporter):
         self.step_summary = {Status.passed.name: 0, Status.failed.name: 0,
                              Status.skipped.name: 0, Status.untested.name: 0,
                              Status.undefined.name: 0}
-        self.start = monotonic()
+        self.start = clock()
         self.failed_scenarios = []
 
     def feature(self, feature):
@@ -78,7 +83,7 @@ class SummaryReporter(Reporter):
         self.stream.write(format_summary("feature", self.feature_summary))
         self.stream.write(format_summary("scenario", self.scenario_summary))
         self.stream.write(format_summary("step", self.step_summary))
-        duration = monotonic() - self.start
+        duration = clock() - self.start
         timings = (int(duration / 60.0), duration % 60)
         self.stream.write('Took %dm%02.3fs\n' % timings)
 
