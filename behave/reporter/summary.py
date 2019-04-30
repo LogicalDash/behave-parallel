@@ -4,17 +4,17 @@ Provides a summary after each test run.
 """
 
 from __future__ import absolute_import, division
-import six
 import sys
 from behave.model import ScenarioOutline
 from behave.model_core import Status
 from behave.reporter.base import Reporter
 from behave.formatter.base import StreamOpener
 
-if six.PY2:
+
+if sys.version_info.major < 3 or sys.version_info.minor < 3:
     from time import clock
 else:
-    from time import monotonic as clock
+    from time import perf_counter as clock
 
 
 # -- DISABLED: optional_steps = ('untested', 'undefined')
