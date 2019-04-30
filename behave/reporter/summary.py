@@ -59,6 +59,7 @@ class SummaryReporter(Reporter):
         self.step_summary = {Status.passed.name: 0, Status.failed.name: 0,
                              Status.skipped.name: 0, Status.untested.name: 0,
                              Status.undefined.name: 0}
+        self.failed_scenarios = []
         self.start = clock()
 
     def feature(self, feature):
